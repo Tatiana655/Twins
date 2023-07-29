@@ -1,13 +1,13 @@
 from NesterovTwin import *
-from SpanishTwin import *
+from SainzTwin import *
 
 if __name__ == '__main__':
     ai = Interval(3, 5, sortQ=False)
     ai1 = Interval(1, 5, sortQ=False)
-    ti = TwinSpanish(ai, ai1)
+    ti = TwinSainz(ai, ai1)
     ai2 = Interval(4, 4.25, sortQ=False)
     ai21 = Interval(3.5, 4.5, sortQ=False)
-    ti2 = TwinSpanish(ai2, ai21)
+    ti2 = TwinSainz(ai2, ai21)
     print("ti=", ti)
     print("ti2=", ti2)
     print("\n")
