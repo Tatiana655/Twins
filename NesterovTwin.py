@@ -2,11 +2,11 @@ from intvalpy import *
 import math as m
 
 
-def galka(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
+def vee(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
     return Interval(min(x.a, y.a), max(x.b, y.b), sortQ=False)
 
 
-def dual_domik(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
+def dual_wedge(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
     return Interval(min(x.b, y.b), max(x.a, y.a), sortQ=False)
 
 
@@ -41,9 +41,9 @@ class TwinNesterov(object):
         # print("X_in=", self.X_in, "; x_ex=", other.X_ex.dual)
         # in1 = self.X_in + other.X_ex.dual
         # in2 = other.X_in + self.X_ex.dual
-        # print("my +", TwinNesterov(galka(in1, in2), self.X_ex + other.X_ex))
-        return TwinNesterov(galka(dual_domik(self.X_in.a + other.X_ex, self.X_in.b + other.X_ex),
-                                  dual_domik(other.X_in.a + self.X_ex, other.X_in.b + self.X_ex)),
+        # print("my +", TwinNesterov(vee(in1, in2), self.X_ex + other.X_ex))
+        return TwinNesterov(vee(dual_wedge(self.X_in.a + other.X_ex, self.X_in.b + other.X_ex),
+                                  dual_wedge(other.X_in.a + self.X_ex, other.X_in.b + self.X_ex)),
                             self.X_ex + other.X_ex)
 
     def __rmul__(self, other):
@@ -53,22 +53,22 @@ class TwinNesterov(object):
     def __mul__(self, other):
         # in1 = self.X_in * other.X_ex.dual
         # in2 = other.X_in * self.X_ex.dual
-        # print("my *", TwinNesterov(galka(in1, in2), self.X_ex * other.X_ex))
+        # print("my *", TwinNesterov(vee(in1, in2), self.X_ex * other.X_ex))
         if isinstance(other, float) or isinstance(other, int):
             return TwinNesterov(other * self.X_in, other * self.X_ex)
         if isinstance(other, TwinNesterov):
-            return TwinNesterov(galka(dual_domik(self.X_in.a * other.X_ex, self.X_in.b * other.X_ex),
-                                      dual_domik(other.X_in.a * self.X_ex, other.X_in.b * self.X_ex)),
+            return TwinNesterov(vee(dual_wedge(self.X_in.a * other.X_ex, self.X_in.b * other.X_ex),
+                                      dual_wedge(other.X_in.a * self.X_ex, other.X_in.b * self.X_ex)),
                                 self.X_ex * other.X_ex)
         print("MUL ERROR")
 
     def __truediv__(self, other):
         # in1 = self.X_in * other.X_ex.dual
         # in2 = other.X_in * self.X_ex.dual
-        # print("my *", TwinNesterov(galka(in1, in2), self.X_ex * other.X_ex))
+        # print("my *", TwinNesterov(vee(in1, in2), self.X_ex * other.X_ex))
         print("Nest def div:", self * (~other))
-        return TwinNesterov(galka(dual_domik(self.X_in.a / other.X_ex, self.X_in.b / other.X_ex),
-                                  dual_domik(other.X_in.a / self.X_ex, other.X_in.b / self.X_ex)),
+        return TwinNesterov(vee(dual_wedge(self.X_in.a / other.X_ex, self.X_in.b / other.X_ex),
+                                  dual_wedge(other.X_in.a / self.X_ex, other.X_in.b / self.X_ex)),
                             self.X_ex / other.X_ex)
 
     def __neg__(self):
