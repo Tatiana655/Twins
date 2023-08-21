@@ -2,11 +2,11 @@ from intvalpy import *
 import math as m
 
 
-def galka(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
+def vee(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
     return Interval(min(x.a, y.a), max(x.b, y.b), sortQ=False)
 
 
-def dual_domik(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
+def dual_wedge(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
     return Interval(min(x.b, y.b), max(x.a, y.a), sortQ=False)
 
 
@@ -36,8 +36,8 @@ class TwinSainz(object):
         # print("X_in=", self.X_in, "; x_ex=", other.X_ex.dual)
         # in1 = self.X_in + other.X_in.dual
         # in2 = other.X_in + self.X_in.dual
-        return TwinSainz(galka(galka(self.X_in.a + other.X_in, self.X_in.b + other.X_in),
-                               galka(other.X_in.a + self.X_in, other.X_in.b + self.X_in)),
+        return TwinSainz(vee(vee(self.X_in.a + other.X_in, self.X_in.b + other.X_in),
+                               vee(other.X_in.a + self.X_in, other.X_in.b + self.X_in)),
                          self.X_ex + other.X_ex)
 
     def __rmul__(self, other):
@@ -48,11 +48,11 @@ class TwinSainz(object):
         # in1 = self.X_in * other.X_ex.dual
         # in2 = other.X_in * self.X_ex.dual
         # print(self.X_in * other.X_in)
-        # print("my *", TwinNesterov(galka(in1, in2), self.X_ex * other.X_ex))
+        # print("my *", TwinNesterov(vee(in1, in2), self.X_ex * other.X_ex))
         if isinstance(other, float) or isinstance(other, int):
             return TwinSainz(other * self.X_in, other * self.X_ex)
-        return TwinSainz(galka(galka(self.X_in.a * other.X_in, self.X_in.b * other.X_in),
-                               galka(other.X_in.a * self.X_in, other.X_in.b * self.X_in)), self.X_ex * other.X_ex)
+        return TwinSainz(vee(vee(self.X_in.a * other.X_in, self.X_in.b * other.X_in),
+                               vee(other.X_in.a * self.X_in, other.X_in.b * self.X_in)), self.X_ex * other.X_ex)
 
     def __neg__(self):
         return TwinSainz(-self.X_in, -self.X_ex)
