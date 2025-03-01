@@ -20,8 +20,7 @@ $$q= b^++A^-$$
 $$p=a^-+B^+$$
 $$q=a^++B^-$$
 - if $\[a^-, a^+\] = \varnothing$ and $\[b^-, b^+\] = \varnothing$
-
-$p,q$ is undefined
+ $p,q$ is undefined
 
 Define the functions $\varphi$ and $\psi$ as follows:
 
