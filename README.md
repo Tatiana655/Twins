@@ -41,13 +41,13 @@ $$T_1+T_2= ( (p,q), (A-+B^-,A^++B^+) )$$
 $$T_1+T_2= ((\varnothing), (A-+B^-,A^++B^+) )$$
 ### Mul
 Multiplication of two twins $T_1,T_2$
-- if $|T_1| \neq -1$ and $|T_2|_l \neq -1$, then
+- if $|T_1|_l \neq -1$ and $|T_2|_l \neq -1$, then
 $$T_1 \cdot T_2 = (\psi(\varphi(a^-(B^-,B^+), a^+(B^-,B^+)),\varphi(b^- (A^-,A^+), b^+  (A^-,A^+) ) )  , (A^-, A^+)\cdot (B^-,B^+) )$$
-- if $|T_1| = -1$ and $|T_2|_l \neq -1$, then
+- if $|T_1|_l  = -1$ and $|T_2|_l \neq -1$, then
 $$T_1 \cdot T_2 = ( \varphi(b^- (A^-,A^+), b^+  (A^-,A^+) ) , (A^-, A^+) \cdot (B^-,B^+) )$$
-- if $|T_1| \neq -1$ and $|T_2|_l = -1$, then
+- if $|T_1|_l  \neq -1$ and $|T_2|_l = -1$, then
 $$T_1 \cdot T_2 =( \varphi(a^- (B^-,B^+), a^+   (B^-,B^+) ) , (A^-, A^+) \cdot (B^-,B^+) ) $$
-- if $|T_1| = -1$ and $|T_2|_l = -1$, then
+- if $|T_1|_l  = -1$ and $|T_2|_l = -1$, then
 $$T_1 \cdot T_2 = (\varnothing,(A^-, A^+)\cdot (B^-,B^+) )$$
 
 ### Uminus 
