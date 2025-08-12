@@ -1,17 +1,20 @@
-from intvalpy import *
+﻿from intvalpy import *
 import math as m
 
 
-def vee(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
+def vee(x: real_intervals.ArrayInterval, y: real_intervals.ArrayInterval):
     return Interval(min(x.a, y.a), max(x.b, y.b), sortQ=False)
 
 
-def dual_wedge(x: RealInterval.ArrayInterval, y: RealInterval.ArrayInterval):
+def dual_wedge(x: real_intervals.ArrayInterval, y: real_intervals.ArrayInterval):
     return Interval(min(x.b, y.b), max(x.a, y.a), sortQ=False)
+
+def phi(x: real_intervals.ArrayInterval, y: real_intervals.ArrayInterval):
+    return Interval(max(x.a, y.a), min(x.b, y.b), sortQ=False)
 
 
 class TwinNesterov(object):
-    def __init__(self, X_in: RealInterval.ArrayInterval, X_ex: RealInterval.ArrayInterval):
+    def __init__(self, X_in: real_intervals.ArrayInterval, X_ex: real_intervals.ArrayInterval):
         # добавить чекалку на вложенность
 
         # if not (X_in in X_ex):
@@ -57,8 +60,8 @@ class TwinNesterov(object):
         if isinstance(other, float) or isinstance(other, int):
             return TwinNesterov(other * self.X_in, other * self.X_ex)
         if isinstance(other, TwinNesterov):
-            return TwinNesterov(vee(dual_wedge(self.X_in.a * other.X_ex, self.X_in.b * other.X_ex),
-                                      dual_wedge(other.X_in.a * self.X_ex, other.X_in.b * self.X_ex)),
+            return TwinNesterov(vee(phi(self.X_in.a * other.X_ex, self.X_in.b * other.X_ex),
+                                      phi(other.X_in.a * self.X_ex, other.X_in.b * self.X_ex)),
                                 self.X_ex * other.X_ex)
         print("MUL ERROR")
 
